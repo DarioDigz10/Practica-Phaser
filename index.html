@@ -55,10 +55,10 @@
             var game = new Phaser.Game(config);
 
             class Onda {
-                constructor(centerX, centerY, width, height, graphics) {
+                constructor(centerX, centerY, graphics) {
                     // Elipse exterior
-                    this.radioX = width;
-                    this.radioY = height;
+                    this.radioX = 120;
+                    this.radioY = 50;
                     this.ellipse = new Phaser.Geom.Ellipse(centerX, centerY, this.radioX, this.radioY);
                     //Elipse interior
                     this.radioX_inner = this.radioX - 10;
@@ -193,7 +193,7 @@
 //PLAYER, LEFT
                 if (cursors.left.isDown && player.body.touching.down)
                 {   //player en el suelo y puede saltar
-                    ondasArray.push(new Onda(player.x, player.y, 120, 50, this.add.graphics({lineStyle: {width: 2, color: 0xff0000}})));
+                    ondasArray.push(new Onda(player.x, player.y, this.add.graphics({lineStyle: {width: 2, color: 0xff0000}})));
                     jumptimer = 1;
                     player.body.velocity.y = -150;
                 } else if (cursors.left.isDown && (jumptimer != 0)) {
@@ -214,7 +214,7 @@
 //PLAYER1, RIGHT			
                 if (cursors.right.isDown && player1.body.touching.down)
                 {
-                    ondasArray.push(new Onda(player1.x, player1.y, 120, 50, this.add.graphics({lineStyle: {width: 2, color: 0x0000ff}})));
+                    ondasArray.push(new Onda(player1.x, player1.y, this.add.graphics({lineStyle: {width: 2, color: 0x0000ff}})));
                     jumptimer1 = 1;
                     player1.body.velocity.y = -150;
                 } else if (cursors.right.isDown && (jumptimer1 != 0))
@@ -232,7 +232,7 @@
 //PLAYER2, DOWN		
                 if (cursors.down.isDown && player2.body.touching.down)
                 {
-                    ondasArray.push(new Onda(player2.x, player2.y, 120, 50, this.add.graphics({lineStyle: {width: 2, color: 0x00ff00}})));
+                    ondasArray.push(new Onda(player2.x, player2.y, this.add.graphics({lineStyle: {width: 2, color: 0x00ff00}})));
                     jumptimer2 = 1;
                     player2.body.velocity.y = -150;
                 } else if (cursors.down.isDown && (jumptimer2 != 0))
@@ -250,7 +250,7 @@
 //PLAYER3, UP				
                 if (cursors.up.isDown && player3.body.touching.down)
                 {
-                    ondasArray.push(new Onda(player3.x, player3.y, 120, 50, this.add.graphics({lineStyle: {width: 2, color: 0xffff00}})));
+                    ondasArray.push(new Onda(player3.x, player3.y, this.add.graphics({lineStyle: {width: 2, color: 0xffff00}})));
                     jumptimer3 = 1;
                     player3.body.velocity.y = -150;
                 } else if (cursors.up.isDown && (jumptimer3 != 0))
