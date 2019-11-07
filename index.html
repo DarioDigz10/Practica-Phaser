@@ -36,8 +36,12 @@
             var player1;
             var player2;
             var player3;
+
+            var ellipses = [];
+
             var stars;
             var bombs;
+
             var colliders;
             var cursors;
             var score = 0;
@@ -45,6 +49,27 @@
             var scoreText;
 
             var game = new Phaser.Game(config);
+
+            class Onda {
+                constructor(centerX, centerY, width, height, graphics) {
+                    this.radioX = width;
+                    this.radioY = height;
+                    this.ellipse = new Phaser.Geom.Ellipse(centerX, centerY, width, height);
+                    this.graphics = graphics;
+                }
+
+                expandir() {
+                    this.radioX += this.radioX * 0.01;
+                    this.radioY += this.radioY * 0.01;
+                    this.ellipse.setSize(this.radioX, this.radioY);
+                }
+
+                render() {
+                    this.graphics.clear();
+                    this.graphics.strokeEllipseShape(this.ellipse, 64);
+
+                }
+            }
 
             function preload()
             {
@@ -70,10 +95,15 @@
                 colliders.create(400, 250, 'collider').setScale(0.2).refreshBody();
 
                 // The PLAYERS and its settings
-                player  = this.physics.add.sprite(100, 350, 'dude');
+                player = this.physics.add.sprite(100, 350, 'dude');
                 player1 = this.physics.add.sprite(700, 350, 'dude');
                 player2 = this.physics.add.sprite(400, 500, 'dude');
                 player3 = this.physics.add.sprite(400, 200, 'dude');
+
+                //var elipse = new Onda(100, 350, 100, 120);
+                //elipse.setGraphics(this.add.graphics({lineStyle: {width: 2, color: 0x00ff00}}));
+
+                //elipse.render();
 
                 //  Player physics properties. Give the little guy a slight bounce.
                 player.setBounce(0.2);
@@ -140,32 +170,37 @@
 
             function update()
             {
-                if (gameOver)
-                {
-                    return;
-                }
+                if (gameOver) return;
 
+                //Update PLAYERS:
                 if (cursors.left.isDown && player.body.touching.down)
                 {
+                    ellipses.push(new Onda(player.x, player.y, 120, 50, this.add.graphics({lineStyle: {width: 2, color: 0xff0000}})));
                     player.setVelocityY(-330);
                 }
 
                 if (cursors.right.isDown && player1.body.touching.down)
                 {
+                    ellipses.push(new Onda(player1.x, player1.y, 120, 50, this.add.graphics({lineStyle: {width: 2, color: 0x0000ff}})));
                     player1.setVelocityY(-330);
                 }
 
                 if (cursors.up.isDown && player2.body.touching.down)
                 {
+                    ellipses.push(new Onda(player2.x, player2.y, 120, 50, this.add.graphics({lineStyle: {width: 2, color: 0x00ff00}})));
                     player2.setVelocityY(-330);
                 }
 
                 if (cursors.down.isDown && player3.body.touching.down)
                 {
+                    ellipses.push(new Onda(player3.x, player3.y, 120, 50, this.add.graphics({lineStyle: {width: 2, color: 0xffff00}})));
                     player3.setVelocityY(-330);
                 }
-
-
+                //Update ELLIPSES
+                for (var i = 0; i < ellipses.length; i++) {
+                    ellipses[i].expandir();
+                    ellipses[i].render();
+                }
             }
 
             function collectStar(player, star)
