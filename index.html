@@ -47,6 +47,10 @@
             var score = 0;
             var gameOver = false;
             var scoreText;
+			var jumptimer;
+			var jumptimer1;
+			var jumptimer2;
+			var jumptimer3;
 
             var game = new Phaser.Game(config);
 
@@ -171,32 +175,79 @@
             function update()
             {
                 if (gameOver) return;
-
-                //Update PLAYERS:
+//PLAYER LEFT
                 if (cursors.left.isDown && player.body.touching.down)
-                {
-                    ellipses.push(new Onda(player.x, player.y, 120, 50, this.add.graphics({lineStyle: {width: 2, color: 0xff0000}})));
-                    player.setVelocityY(-330);
+            {   //player en el suelo y puede saltar
+                                  ellipses.push(new Onda(player.x, player.y, 120, 50, this.add.graphics({lineStyle: {width: 2, color: 0xff0000}})));
+                jumptimer = 1;
+                player.body.velocity.y = -150;
+            } else if (cursors.left.isDown && (jumptimer != 0))
+            { //player esta en el aire pulsando la tecla de saltar todavia
+                if (jumptimer > 25) { // player lleva 30 frames en el aire
+                    jumptimer = 0;
+                } else { // player puede seguir saltando, no ha alcanzado los 30 frames
+                    jumptimer++;
+                    player.body.velocity.y = -150;
                 }
+            } else if (jumptimer != 0) { //reset jumptimer al dejar de pulsar la tecla
+                jumptimer = 0;
+            }
+			
+//PLAYER 1 RIGHT			
 
                 if (cursors.right.isDown && player1.body.touching.down)
-                {
-                    ellipses.push(new Onda(player1.x, player1.y, 120, 50, this.add.graphics({lineStyle: {width: 2, color: 0x0000ff}})));
-                    player1.setVelocityY(-330);
+            {   
+                jumptimer1 = 1;
+                player1.body.velocity.y = -150;
+            } else if (cursors.right.isDown && (jumptimer1 != 0))
+            { 
+                if (jumptimer1 > 25) { 
+                    jumptimer1 = 0;
+                } else { 
+                    jumptimer1++;
+                    player1.body.velocity.y = -150;
                 }
+            } else if (jumptimer1 != 0) { 
+                jumptimer1 = 0;
+            }
+				
+//PLAYER 2 DOWN		
 
-                if (cursors.up.isDown && player2.body.touching.down)
-                {
-                    ellipses.push(new Onda(player2.x, player2.y, 120, 50, this.add.graphics({lineStyle: {width: 2, color: 0x00ff00}})));
-                    player2.setVelocityY(-330);
+                if (cursors.down.isDown && player2.body.touching.down)
+            {   
+                jumptimer2 = 1;
+                player2.body.velocity.y = -150;
+            } else if (cursors.down.isDown && (jumptimer2 != 0))
+            { 
+                if (jumptimer2 > 25) { 
+                    jumptimer2 = 0;
+                } else { 
+                    jumptimer2++;
+                    player2.body.velocity.y = -150;
                 }
+            } else if (jumptimer2 != 0) { 
+                jumptimer2 = 0;
+            }
+				
+//PLAYER 3 UP				
 
-                if (cursors.down.isDown && player3.body.touching.down)
-                {
-                    ellipses.push(new Onda(player3.x, player3.y, 120, 50, this.add.graphics({lineStyle: {width: 2, color: 0xffff00}})));
-                    player3.setVelocityY(-330);
+                if (cursors.up.isDown && player3.body.touching.down)
+            {   
+                jumptimer3 = 1;
+                player3.body.velocity.y = -150;
+            } else if (cursors.up.isDown && (jumptimer3 != 0))
+            { 
+                if (jumptimer3 > 25) { 
+                    jumptimer3 = 0;
+                } else { 
+                    jumptimer3++;
+                    player3.body.velocity.y = -150;
                 }
-                //Update ELLIPSES
+            } else if (jumptimer3 != 0) { 
+                jumptimer3 = 0;
+            }
+
+                              //Update ELLIPSES
                 for (var i = 0; i < ellipses.length; i++) {
                     ellipses[i].expandir();
                     ellipses[i].render();
