@@ -4,6 +4,11 @@
         <meta charset="UTF-8" />
         <title>Making your first Phaser 3 Game - Part 10</title>
         <script src="//cdn.jsdelivr.net/npm/phaser@3.11.0/dist/phaser.js"></script>
+        <script src="JS/MainMenu.js" type="text/javascript"></script>
+        <script src="JS/EscenaJuego.js" type="text/javascript"></script>
+        <script src="JS/Onda.js" type="text/javascript"></script>
+        <script src="JS/Player.js" type="text/javascript"></script>
+        
         <style type="text/css">
             body {
                 margin: 0;
@@ -13,327 +18,7 @@
     <body>
 
         <script type="text/javascript">
-
-            var player;
-            var player1;
-            var player2;
-            var player3;
-
-            var ondasArray = [];
-
-            var stars;
-            var bombs;
-
-            var colliders;
-            var cursors;
-            var score = 0;
-            var gameOver = false;
-            var scoreText;
-            var jumptimer;
-            var jumptimer1;
-            var jumptimer2;
-            var jumptimer3;
-
-            class MainMenu extends Phaser.Scene {
-
-                constructor() {
-                    super("MainMenu");
-                }
-                preload()
-                {
-                    this.load.image('sky', 'assets/sky.png');
-                }
-
-                create()
-                {
-                    this.add.image(400, 300, 'sky');
-                    var texto = this.add.text(game.config.width / 2, game.config.height / 2, 'Press Enter to start', {
-                        fontSize: '40px',
-                        fill: '#000000'
-                    }).setOrigin(0.5)
-                }
-
-                update()
-                {
-                    if (this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER).isDown) {
-                        this.scene.start("EscenaJuego");
-                    }
-                }
-            }
-
-            class Onda {
-                constructor(centerX, centerY, graphics) {
-                    // Elipse exterior
-                    this.radioX = 120;
-                    this.radioY = 50;
-                    this.ellipse = new Phaser.Geom.Ellipse(centerX, centerY, this.radioX, this.radioY);
-                    //Elipse interior
-                    this.radioX_inner = this.radioX - 10;
-                    this.radioY_inner = this.radioX - 10;
-                    this.ellipse_inner = new Phaser.Geom.Ellipse(centerX, centerY, this.radioX_inner, this.radioY_inner);
-                    this.graphics = graphics;
-                }
-
-                checkCollision(x, y) {
-                    return this.ellipse.contains(x, y) && !this.ellipse_inner.contains(x, y);
-                }
-
-                expandir() {
-                    //Incrementar el radio de la elipse exterior
-                    this.radioX += this.radioX * 0.01;
-                    this.radioY += this.radioY * 0.01;
-                    this.ellipse.setSize(this.radioX, this.radioY);
-                    //Actualizar el radio del la elipse interior; siempre se mantiene a 10 de distancia
-                    this.radioX_inner = this.radioX - 10;
-                    this.radioY_inner = this.radioY - 10;
-                    this.ellipse_inner.setSize(this.radioX_inner, this.radioY_inner);
-                }
-
-                render() {
-                    this.graphics.clear();
-                    this.graphics.strokeEllipseShape(this.ellipse, 64);
-                    this.graphics.strokeEllipseShape(this.ellipse_inner, 64);
-                }
-            }
-            class EscenaJuego extends Phaser.Scene {
-
-                constructor() {
-                    super("EscenaJuego");
-                }
-
-                preload()
-                {
-                    this.load.image('sky', 'assets/sky.png');
-                    this.load.image('collider', 'assets/collider.png');
-                    this.load.image('star', 'assets/star.png');
-                    this.load.image('bomb', 'assets/bomb.png');
-                    this.load.spritesheet('dude', 'assets/dude.png', {frameWidth: 32, frameHeight: 48});
-                }
-
-                create()
-                {
-                    //  A simple background for our game
-                    this.add.image(400, 300, 'sky');
-
-                    //  The platforms group contains the ground and the 2 ledges we can jump on
-                    colliders = this.physics.add.staticGroup();
-
-                    //  Here we create the Ground COLLIDERS.
-                    colliders.create(100, 400, 'collider').setScale(0.2).refreshBody();
-                    colliders.create(700, 400, 'collider').setScale(0.2).refreshBody();
-                    colliders.create(400, 550, 'collider').setScale(0.2).refreshBody();
-                    colliders.create(400, 250, 'collider').setScale(0.2).refreshBody();
-
-                    // The PLAYERS and its settings
-                    player = this.physics.add.sprite(100, 350, 'dude');
-                    player1 = this.physics.add.sprite(700, 350, 'dude');
-                    player2 = this.physics.add.sprite(400, 500, 'dude');
-                    player3 = this.physics.add.sprite(400, 200, 'dude');
-
-                    //var elipse = new Onda(100, 350, 100, 120);
-                    //elipse.setGraphics(this.add.graphics({lineStyle: {width: 2, color: 0x00ff00}}));
-
-                    //elipse.render();
-
-                    //  Player physics properties. Give the little guy a slight bounce.
-                    player.setBounce(0.2);
-                    player1.setBounce(0.2);
-                    player2.setBounce(0.2);
-                    player3.setBounce(0.2);
-
-                    //  Our player animations, turning, walking left and walking right.
-                    this.anims.create({
-                        key: 'left',
-                        frames: this.anims.generateFrameNumbers('dude', {start: 0, end: 3}),
-                        frameRate: 10,
-                        repeat: -1
-                    });
-
-                    this.anims.create({
-                        key: 'turn',
-                        frames: [{key: 'dude', frame: 4}],
-                        frameRate: 20
-                    });
-
-                    this.anims.create({
-                        key: 'right',
-                        frames: this.anims.generateFrameNumbers('dude', {start: 5, end: 8}),
-                        frameRate: 10,
-                        repeat: -1
-                    });
-
-                    //  Input Events
-                    cursors = this.input.keyboard.createCursorKeys();
-
-                    //  Some stars to collect, 12 in total, evenly spaced 70 pixels apart along the x axis
-                    stars = this.physics.add.group({
-                        key: 'star',
-                        repeat: 11,
-                        setXY: {x: 12, y: 0, stepX: 70}
-                    });
-
-                    stars.children.iterate(function (child) {
-
-                        //  Give each star a slightly different bounce
-                        child.setBounceY(Phaser.Math.FloatBetween(0.4, 0.8));
-
-                    });
-
-                    bombs = this.physics.add.group();
-
-                    //  The score
-                    scoreText = this.add.text(16, 16, 'score: 0', {fontSize: '32px', fill: '#000'});
-
-                    //  Collide the PLAYERS and the stars with the platforms
-                    this.physics.add.collider(player, colliders);
-                    this.physics.add.collider(player1, colliders);
-                    this.physics.add.collider(player2, colliders);
-                    this.physics.add.collider(player3, colliders);
-                    this.physics.add.collider(stars, colliders);
-                    this.physics.add.collider(bombs, colliders);
-
-                    //  Checks to see if the player overlaps with any of the stars, if he does call the collectStar function
-                    this.physics.add.overlap(player, stars, this.collectStar, null, this);
-
-                    this.physics.add.collider(player, bombs, this.hitBomb, null, this);
-                }
-
-                update()
-                {
-                    if (this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TAB).ESC) {
-                        this.scene.start("MainMenu");
-                    }
-
-                    if (gameOver)
-                    {
-                        //volver al menu principal
-                        this.scene.start("MainMenu");
-                        //return;
-                    }
-
-//PLAYER, LEFT
-                    if (cursors.left.isDown && player.body.touching.down)
-                    {   //player en el suelo y puede saltar
-                        ondasArray.push(new Onda(player.x, player.y, this.add.graphics({lineStyle: {width: 2, color: 0xff0000}})));
-                        jumptimer = 1;
-                        player.body.velocity.y = -150;
-                    } else if (cursors.left.isDown && (jumptimer != 0)) {
-                        //player esta en el aire pulsando la tecla de saltar todavia
-                        if (jumptimer > 25) {
-                            // // player lleva 30 frames en el aire
-                            jumptimer = 0;
-                        } else {
-                            // player puede seguir saltando, no ha alcanzado los 30 frames
-                            jumptimer++;
-                            player.body.velocity.y = -150;
-                        }
-                    } else if (jumptimer != 0) {
-                        //reset jumptimer al dejar de pulsar la tecla
-                        jumptimer = 0;
-                    }
-
-//PLAYER1, RIGHT			
-                    if (cursors.right.isDown && player1.body.touching.down)
-                    {
-                        ondasArray.push(new Onda(player1.x, player1.y, this.add.graphics({lineStyle: {width: 2, color: 0x0000ff}})));
-                        jumptimer1 = 1;
-                        player1.body.velocity.y = -150;
-                    } else if (cursors.right.isDown && (jumptimer1 != 0))
-                    {
-                        if (jumptimer1 > 25) {
-                            jumptimer1 = 0;
-                        } else {
-                            jumptimer1++;
-                            player1.body.velocity.y = -150;
-                        }
-                    } else if (jumptimer1 != 0) {
-                        jumptimer1 = 0;
-                    }
-
-//PLAYER2, DOWN		
-                    if (cursors.down.isDown && player2.body.touching.down)
-                    {
-                        ondasArray.push(new Onda(player2.x, player2.y, this.add.graphics({lineStyle: {width: 2, color: 0x00ff00}})));
-                        jumptimer2 = 1;
-                        player2.body.velocity.y = -150;
-                    } else if (cursors.down.isDown && (jumptimer2 != 0))
-                    {
-                        if (jumptimer2 > 25) {
-                            jumptimer2 = 0;
-                        } else {
-                            jumptimer2++;
-                            player2.body.velocity.y = -150;
-                        }
-                    } else if (jumptimer2 != 0) {
-                        jumptimer2 = 0;
-                    }
-
-//PLAYER3, UP				
-                    if (cursors.up.isDown && player3.body.touching.down)
-                    {
-                        ondasArray.push(new Onda(player3.x, player3.y, this.add.graphics({lineStyle: {width: 2, color: 0xffff00}})));
-                        jumptimer3 = 1;
-                        player3.body.velocity.y = -150;
-                    } else if (cursors.up.isDown && (jumptimer3 != 0))
-                    {
-                        if (jumptimer3 > 25) {
-                            jumptimer3 = 0;
-                        } else {
-                            jumptimer3++;
-                            player3.body.velocity.y = -150;
-                        }
-                    } else if (jumptimer3 != 0) {
-                        jumptimer3 = 0;
-                    }
-
-                    //Update ELLIPSES
-                    for (var i = 0; i < ondasArray.length; i++) {
-                        ondasArray[i].expandir();
-                        ondasArray[i].render();
-                    }
-                }
-
-                collectStar(player, star)
-                {
-                    star.disableBody(true, true);
-
-                    //  Add and update the score
-                    score += 10;
-                    scoreText.setText('Score: ' + score);
-
-                    if (stars.countActive(true) === 0)
-                    {
-                        //  A new batch of stars to collect
-                        stars.children.iterate(function (child) {
-
-                            child.enableBody(true, child.x, 0, true, true);
-
-                        });
-
-                        var x = (player.x < 400) ? Phaser.Math.Between(400, 800) : Phaser.Math.Between(0, 400);
-
-                        var bomb = bombs.create(x, 16, 'bomb');
-                        bomb.setBounce(1);
-                        bomb.setCollideWorldBounds(true);
-                        bomb.setVelocity(Phaser.Math.Between(-200, 200), 20);
-                        bomb.allowGravity = false;
-
-                    }
-                }
-
-                hitBomb(player, bomb)
-                {
-                    this.physics.pause();
-
-                    player.setTint(0xff0000);
-
-                    player.anims.play('turn');
-
-                    gameOver = true;
-                }
-            }
-            ;
-
+            
             var config =
                     {
                         type: Phaser.AUTO,
@@ -351,6 +36,32 @@
                     };
 
             var game = new Phaser.Game(config);
+            
+            
+            //variables globales    
+            var playerArray = [];
+            
+            var player;
+            var player1;
+            var player2;
+            var player3;
+
+            var ondasArray = [];
+
+            var stars;
+            var bombs;
+
+            var colliders;
+            var cursors;
+            var score = 0;
+            var gameOver = false;
+            var scoreText;
+            
+            var jumptimer;
+            var jumptimer1;
+            var jumptimer2;
+            var jumptimer3;
+
 
         </script>
 
