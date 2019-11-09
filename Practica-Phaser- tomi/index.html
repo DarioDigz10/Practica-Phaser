@@ -1,0 +1,80 @@
+<!doctype html> 
+<html lang="en"> 
+    <head> 
+        <meta charset="UTF-8" />
+        <title>Making your first Phaser 3 Game - Part 10</title>
+        <script src="//cdn.jsdelivr.net/npm/phaser@3.11.0/dist/phaser.js"></script>
+        <script src="JS/MainMenu.js" type="text/javascript"></script>
+        <script src="JS/EscenaJuego.js" type="text/javascript"></script>
+        <script src="JS/Onda.js" type="text/javascript"></script>
+        <script src="JS/Player.js" type="text/javascript"></script>
+        
+        <style type="text/css">
+            body {
+                margin: 0;
+            }
+        </style>
+    </head>
+    <body>
+
+        <script type="text/javascript">
+            
+            var config =
+                    {
+                        type: Phaser.AUTO,
+                        width: 1500,
+                        height: 900,
+                        physics: {
+                            default: 'arcade',
+                            arcade: {
+                                gravity: {y: 300},
+                                debug: false
+                            }
+                        },
+                        scene: [MainMenu, EscenaJuego]
+
+                    };
+
+            var game = new Phaser.Game(config);
+            
+            
+            //variables globales    
+            var playerArray = [];
+            
+            var player;
+            var player1;
+            var player2;
+            var player3;
+
+            var ondasArray = [];
+
+            var stars;
+            var bombs;
+
+            var colliders;
+            var cursors;
+            var score = 0;
+            var jugadoresMuertos = 0;
+            var gameOver = false;
+            var scoreText;
+            var scoreText1;
+            var scoreText2;
+            var scoreText3;
+            
+            var jumptimer=0;
+            var jumptimer1=0;
+            var jumptimer2=0;
+            var jumptimer3=0;
+            var haSaltado=false;
+            var haSaltado1=false;
+            var haSaltado2=false;
+            var haSaltado3=false;
+			var victoria=0;
+            var victoria1=0;
+            var victoria2=0;
+            var victoria3=0;
+
+        </script>
+
+    </body>
+</html>
