@@ -1,6 +1,7 @@
  class Onda {
-                constructor(centerX, centerY, graphics) {
-                    // Elipse exterior
+                constructor(centerX, centerY, graphics,name) {
+                    // Elipse exteriorthis
+					this.creator = name;
                     this.radioX = 120;
                     this.radioY = 50;
                     this.ellipse = new Phaser.Geom.Ellipse(centerX, centerY, this.radioX, this.radioY);
@@ -30,5 +31,6 @@
                     this.graphics.clear();
                     this.graphics.strokeEllipseShape(this.ellipse, 64);
                     this.graphics.strokeEllipseShape(this.ellipse_inner, 64);
+					
                 }
             }

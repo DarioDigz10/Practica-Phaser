@@ -2,7 +2,7 @@
 <html lang="en"> 
     <head> 
         <meta charset="UTF-8" />
-        <title>Making your first Phaser 3 Game - Part 10</title>
+        <title>Wave Jump</title>
         <script src="//cdn.jsdelivr.net/npm/phaser@3.11.0/dist/phaser.js"></script>
         <script src="JS/MainMenu.js" type="text/javascript"></script>
         <script src="JS/EscenaJuego.js" type="text/javascript"></script>
@@ -22,12 +22,16 @@
             var config =
                     {
                         type: Phaser.AUTO,
-                        width: 800,
-                        height: 600,
+                        width: 1500,
+                        height: 900,
+						audio: {
+							disableWebAudio: true,
+							noAudio: false
+							},
                         physics: {
                             default: 'arcade',
                             arcade: {
-                                gravity: {y: 300},
+                                gravity: {y: 400},
                                 debug: false
                             }
                         },
@@ -54,15 +58,28 @@
             var colliders;
             var cursors;
             var score = 0;
+            var jugadoresMuertos = 0;
             var gameOver = false;
             var scoreText;
+            var scoreText1;
+            var scoreText2;
+            var scoreText3;
             
-            var jumptimer;
-            var jumptimer1;
-            var jumptimer2;
-            var jumptimer3;
+            var jumptimer=0;
+            var jumptimer1=0;
+            var jumptimer2=0;
+            var jumptimer3=0;
+            var haSaltado=false;
+            var haSaltado1=false;
+            var haSaltado2=false;
+            var haSaltado3=false;
+			var victoria=0;
+            var victoria1=0;
+            var victoria2=0;
+            var victoria3=0;
 
-
+			var music;
+			var wave;
         </script>
 
     </body>
