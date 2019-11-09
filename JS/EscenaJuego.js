@@ -1,12 +1,15 @@
 class EscenaJuego extends Phaser.Scene {
-
+	
     constructor() {
         super("EscenaJuego");
+		
     }
 
     preload()
     {
-        this.load.image('sky', 'assets/sky.png');
+        this.load.image('escenario', 'assets/escenario.jpg');
+        this.load.image('shadow', 'assets/shadow.png');
+        this.load.image('escenario2', 'assets/escenario2.png');
         this.load.image('collider', 'assets/collider.png');
         this.load.image('star', 'assets/star.png');
         this.load.image('bomb', 'assets/bomb.png');
@@ -16,22 +19,29 @@ class EscenaJuego extends Phaser.Scene {
     create()
     {
         //  A simple background for our game
-        this.add.image(400, 300, 'sky');
-
+        this.add.image(750, 450, 'escenario').setScale(1.5);
+        
+        this.add.image(750, 450, 'escenario2').setScale(1.5).setDepth(0.5);
+		//Sombras
+		this.add.image(1050, 630, 'shadow');
+		this.add.image(740, 490, 'shadow');
+		this.add.image(860, 770, 'shadow');
+		this.add.image(550, 590, 'shadow');
         //  The platforms group contains the ground and the 2 ledges we can jump on
         colliders = this.physics.add.staticGroup();
 
         //  Here we create the Ground COLLIDERS.
-        colliders.create(100, 400, 'collider').setScale(0.2).refreshBody();
-        colliders.create(700, 400, 'collider').setScale(0.2).refreshBody();
-        colliders.create(400, 550, 'collider').setScale(0.2).refreshBody();
-        colliders.create(400, 250, 'collider').setScale(0.2).refreshBody();
+        //colliders.create(100, 400, 'collider').setScale(0.2).refreshBody();
+        colliders.create(1050, 640, 'collider').setScale(0.2).refreshBody();
+        colliders.create(740, 500, 'collider').setScale(0.2).refreshBody();
+        colliders.create(860, 780, 'collider').setScale(0.2).refreshBody();
+        colliders.create(550, 600, 'collider').setScale(0.2).refreshBody();
 
         // The PLAYERS and its settings
-        player = new Player(100, 350, this);
-        player1 = new Player(700, 350, this);
-        player2 = new Player(400, 500, this);
-        player3 = new Player(400, 200, this);
+        player1 = new Player(1050, 440, this);
+        player3 = new Player(740, 300, this);
+        player2 = new Player(860, 580, this);
+        player = new Player(550, 440, this);
 
         //  Our player animations, turning, walking left and walking right.
         this.anims.create({
@@ -58,7 +68,7 @@ class EscenaJuego extends Phaser.Scene {
         cursors = this.input.keyboard.createCursorKeys();
 
         //  Some stars to collect, 12 in total, evenly spaced 70 pixels apart along the x axis
-        stars = this.physics.add.group({
+        /*stars = this.physics.add.group({
             key: 'star',
             repeat: 11,
             setXY: {x: 12, y: 0, stepX: 70}
@@ -72,99 +82,187 @@ class EscenaJuego extends Phaser.Scene {
         });
 
         bombs = this.physics.add.group();
-
+		*/
         //  The score
-        scoreText = this.add.text(16, 16, 'score: 0', {fontSize: '32px', fill: '#000'});
+        scoreText3 = this.add.text(16, 16, 'Score: '+victoria3, {fontSize: '40px', fill: '#ffff00',stroke :  '#00000f' , strokeThickness :  2 });
+        scoreText1 = this.add.text(1300, 16, 'Score: '+victoria1, {fontSize: '40px', fill: '#0000ff',stroke :  '#00000f' , strokeThickness :  2});
+        scoreText = this.add.text(16, 800, 'Score: '+victoria, {fontSize: '40px', fill: '#ff0000',stroke :  '#00000f' , strokeThickness :  2});
+        scoreText2 = this.add.text(1300, 800, 'Score: '+victoria2, {fontSize: '40px', fill: '#00ff00',stroke :  '#00000f' , strokeThickness :  2});
     }
 
     update()
     {
-        if (gameOver)
+		
+        /*if (gameOver)
         {
             //volver al menu principal
             this.scene.start("MainMenu");
-        }
+        }*/
+		if(jugadoresMuertos>=3){
+			ondasArray=[];
+			gameOver=true;
+		}
 
 //PLAYER, LEFT
-
-        if (cursors.left.isDown && player.body.touching.down)
-        {   //player en el suelo y puede saltar
-            ondasArray.push(new Onda(player.object.x, player.object.y, this.add.graphics({lineStyle: {width: 2, color: 0xff0000}})));
-            jumptimer = 1;
-            player.velocity.y = -150;
-        } else if (cursors.left.isDown && (jumptimer != 0)) {
-            //player esta en el aire pulsando la tecla de saltar todavia
-            if (jumptimer > 25) {
-                // // player lleva 30 frames en el aire
-                jumptimer = 0;
-            } else {
-                // player puede seguir saltando, no ha alcanzado los 30 frames
-                jumptimer++;
-                player.velocity.y = -150;
-            }
-        } else if (jumptimer != 0) {
-            //reset jumptimer al dejar de pulsar la tecla
-            jumptimer = 0;
-        }
-
-        //PLAYER1, RIGHT			
-        if (cursors.right.isDown && player1.body.touching.down)
-        {
-            ondasArray.push(new Onda(player1.object.x, player1.object.y, this.add.graphics({lineStyle: {width: 2, color: 0x0000ff}})));
-            jumptimer1 = 1;
-            player1.body.velocity.y = -150;
-        } else if (cursors.right.isDown && (jumptimer1 != 0))
-        {
-            if (jumptimer1 > 25) {
-                jumptimer1 = 0;
-            } else {
-                jumptimer1++;
-                player1.body.velocity.y = -150;
-            }
-        } else if (jumptimer1 != 0) {
-            jumptimer1 = 0;
-        }
-
-        //PLAYER2, DOWN		
-        if (cursors.down.isDown && player2.body.touching.down)
-        {
-            ondasArray.push(new Onda(player2.object.x, player2.object.y, this.add.graphics({lineStyle: {width: 2, color: 0x00ff00}})));
-            jumptimer2 = 1;
-            player2.body.velocity.y = -150;
-        } else if (cursors.down.isDown && (jumptimer2 != 0))
-        {
-            if (jumptimer2 > 25) {
-                jumptimer2 = 0;
-            } else {
-                jumptimer2++;
-                player2.body.velocity.y = -150;
-            }
-        } else if (jumptimer2 != 0) {
-            jumptimer2 = 0;
-        }
-
-        //PLAYER3, UP				
-        if (cursors.up.isDown && player3.body.touching.down)
-        {
-            ondasArray.push(new Onda(player3.object.x, player3.object.y, this.add.graphics({lineStyle: {width: 2, color: 0xffff00}})));
-            jumptimer3 = 1;
-            player3.body.velocity.y = -150;
-        } else if (cursors.up.isDown && (jumptimer3 != 0))
-        {
-            if (jumptimer3 > 25) {
-                jumptimer3 = 0;
-            } else {
-                jumptimer3++;
-                player3.body.velocity.y = -150;
-            }
-        } else if (jumptimer3 != 0) {
-            jumptimer3 = 0;
-        }
-
+		if(!player.muerto){
+			if (cursors.left.isDown && player.body.touching.down)
+			{   //player en el suelo y puede saltar
+				
+				jumptimer = 1;
+				player.velocity.y = -150;
+			} else if (cursors.left.isDown && (jumptimer != 0)) {
+				//player esta en el aire pulsando la tecla de saltar todavia
+				if (jumptimer > 25) {
+					// // player lleva 30 frames en el aire
+					jumptimer = 0;
+					haSaltado=true;
+				} else {
+					// player puede seguir saltando, no ha alcanzado los 30 frames
+					jumptimer++;
+					player.velocity.y = -150;
+				}
+			} else if (jumptimer != 0) {
+				//reset jumptimer al dejar de pulsar la tecla
+				jumptimer = 0;
+				haSaltado=true;
+			}
+			if(haSaltado && player.body.touching.down){
+				haSaltado=false;
+				ondasArray.push(new Onda(player.object.x, player.body.bottom, this.add.graphics({lineStyle: {width: 2, color: 0xff0000}}),"player"));
+			}
+		}
+        //PLAYER1, RIGHT	
+		if(!player1.muerto){		
+			if (cursors.right.isDown && player1.body.touching.down)
+			{
+				jumptimer1 = 1;
+				player1.body.velocity.y = -150;
+			} else if (cursors.right.isDown && (jumptimer1 != 0))
+			{
+				if (jumptimer1 > 25) {
+					jumptimer1 = 0;
+					haSaltado1=true;
+				} else {
+					jumptimer1++;
+					player1.body.velocity.y = -150;
+				}
+			} else if (jumptimer1 != 0) {
+				jumptimer1 = 0;
+				haSaltado1=true;
+			}
+			
+			if(haSaltado1 && player1.body.touching.down){
+				haSaltado1=false;
+				ondasArray.push(new Onda(player1.object.x, player1.body.bottom, this.add.graphics({lineStyle: {width: 2, color: 0x0000ff}}),"player1"));
+			}
+		}
+        //PLAYER2, DOWN
+		if(!player2.muerto){			
+			if (cursors.down.isDown && player2.body.touching.down)
+			{
+				jumptimer2 = 1;
+				player2.body.velocity.y = -150;
+			} else if (cursors.down.isDown && (jumptimer2 != 0))
+			{
+				if (jumptimer2 > 25) {
+					jumptimer2 = 0;
+					haSaltado2=true;
+				} else {
+					jumptimer2++;
+					player2.body.velocity.y = -150;
+				}
+			} else if (jumptimer2 != 0) {
+				jumptimer2 = 0;
+				haSaltado2=true;
+			}
+			if(haSaltado2 && player2.body.touching.down){
+				haSaltado2=false;
+				ondasArray.push(new Onda(player2.object.x, player2.body.bottom, this.add.graphics({lineStyle: {width: 2, color: 0x00ff00}}),"player2"));
+			}
+		}
+        //PLAYER3, UP	
+		if(!player3.muerto){		
+			if (cursors.up.isDown && player3.body.touching.down)
+			{
+				jumptimer3 = 1;
+				player3.body.velocity.y = -150;
+			} else if (cursors.up.isDown && (jumptimer3 != 0))
+			{
+				if (jumptimer3 > 25) {
+					jumptimer3 = 0;
+					haSaltado3=true;
+				} else {
+					jumptimer3++;
+					player3.body.velocity.y = -150;
+				}
+			} else if (jumptimer3 != 0) {
+				jumptimer3 = 0;
+				haSaltado3=true;
+			}
+			if(haSaltado3 && player3.body.touching.down){
+				haSaltado3=false;
+				ondasArray.push(new Onda(player3.object.x, player3.body.bottom, this.add.graphics({lineStyle: {width: 2, color: 0xffff00}}),"player3"));
+			}
+		}
         //Update ELLIPSES
         for (var i = 0; i < ondasArray.length; i++) {
             ondasArray[i].expandir();
             ondasArray[i].render();
+			//ondasArray[i]checkCollision(player3.x, player3.y);
+			if(!player.muerto){
+				if(ondasArray[i].checkCollision(player.object.x, player.body.bottom) && player.body.touching.down && ondasArray[i].creator!="player"){
+					player.matar();
+					jugadoresMuertos++;
+				}
+			}
+			
+			if(!player1.muerto){
+				if(ondasArray[i].checkCollision(player1.object.x, player1.body.bottom) && player1.body.touching.down && ondasArray[i].creator!="player1"){
+					player1.matar();
+					jugadoresMuertos++;
+				}
+			}
+			if(!player2.muerto){
+				if(ondasArray[i].checkCollision(player2.object.x, player2.body.bottom) && player2.body.touching.down && ondasArray[i].creator!="player2"){
+					player2.matar();
+					jugadoresMuertos++;
+				}
+			}
+			if(!player3.muerto){
+				if(ondasArray[i].checkCollision(player3.body.x, player3.body.bottom) && player3.body.touching.down && ondasArray[i].creator!="player3"){
+					player3.matar();
+					jugadoresMuertos++;
+				}
+			}
+        }
+
+		
+		//scoreText.addColor(ssss);scoreText
+		
+		
+
+		 if (this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER).isDown && gameOver) {
+
+				if(!player.muerto){
+					victoria++;
+				}
+				if(!player1.muerto){
+					victoria1++;
+				}
+				if(!player2.muerto){
+					victoria2++;
+				}
+				if(!player3.muerto){
+					victoria3++;
+				}
+				ondasArray=[];
+				haSaltado=false;
+				haSaltado1=false;
+				haSaltado2=false;
+				haSaltado3=false;
+				gameOver=false;
+				jugadoresMuertos = 0;
+                this.scene.start("EscenaJuego");
         }
     }
 
