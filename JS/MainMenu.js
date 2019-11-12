@@ -17,7 +17,7 @@ class MainMenu extends Phaser.Scene {
 					
 					
 					
-                    var texto = this.add.text(game.config.width / 2, (game.config.height / 2) + 200, 'Presiona Enter para empezar.', {
+                    var texto = this.add.text(game.config.width / 2, (game.config.height / 2) + 200, 'Press Enter to start.', {
                         fontSize: '40px',
                         fill: '#ffffff',
 						stroke :  '#00000' , 
