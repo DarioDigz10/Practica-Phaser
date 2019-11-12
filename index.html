@@ -8,7 +8,7 @@
         <script src="JS/EscenaJuego.js" type="text/javascript"></script>
         <script src="JS/Onda.js" type="text/javascript"></script>
         <script src="JS/Player.js" type="text/javascript"></script>
-        
+
         <style type="text/css">
             body {
                 margin: 0;
@@ -18,16 +18,16 @@
     <body>
 
         <script type="text/javascript">
-            
+
             var config =
                     {
                         type: Phaser.AUTO,
                         width: 1500,
                         height: 900,
-						audio: {
-							disableWebAudio: true,
-							noAudio: false
-							},
+                        audio: {
+                            disableWebAudio: true,
+                            noAudio: false
+                        },
                         physics: {
                             default: 'arcade',
                             arcade: {
@@ -40,20 +40,21 @@
                     };
 
             var game = new Phaser.Game(config);
-            
-            
+
+
             //variables globales    
-            var playerArray = [];
-            
+
             var player;
             var player1;
             var player2;
             var player3;
 
-            var ondasArray = [];
+            var jumpKey0;
+            var jumpKey1;
+            var jumpKey2;
+            var jumpKey3;
 
-            var stars;
-            var bombs;
+            var ondasArray = [];
 
             var colliders;
             var cursors;
@@ -64,22 +65,22 @@
             var scoreText1;
             var scoreText2;
             var scoreText3;
-            
-            var jumptimer=0;
-            var jumptimer1=0;
-            var jumptimer2=0;
-            var jumptimer3=0;
-            var haSaltado=false;
-            var haSaltado1=false;
-            var haSaltado2=false;
-            var haSaltado3=false;
-			var victoria=0;
-            var victoria1=0;
-            var victoria2=0;
-            var victoria3=0;
 
-			var music;
-			var wave;
+            var jumptimer = 0;
+            var jumptimer1 = 0;
+            var jumptimer2 = 0;
+            var jumptimer3 = 0;
+            var haSaltado = false;
+            var haSaltado1 = false;
+            var haSaltado2 = false;
+            var haSaltado3 = false;
+            var victoria = 0;
+            var victoria1 = 0;
+            var victoria2 = 0;
+            var victoria3 = 0;
+
+            var music;
+            var wave;
         </script>
 
     </body>
