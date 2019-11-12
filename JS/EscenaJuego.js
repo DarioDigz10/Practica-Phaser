@@ -1,7 +1,8 @@
 class EscenaJuego extends Phaser.Scene {
-
+	
     constructor() {
         super("EscenaJuego");
+		
     }
 
     preload()
@@ -12,19 +13,27 @@ class EscenaJuego extends Phaser.Scene {
         this.load.image('collider', 'assets/collider.png');
         this.load.image('star', 'assets/star.png');
         this.load.image('bomb', 'assets/bomb.png');
+		this.load.audio("musicBg", 'assets/background.mp3');
+		this.load.audio("wave", 'assets/bow.mp3');
         this.load.spritesheet('dude', 'assets/dude.png', {frameWidth: 32, frameHeight: 48});
     }
 
     create()
     {
-        //Background for the game
+		
+        //  A simple background for our game
         this.add.image(750, 450, 'escenario').setScale(1.5);
+        //this.sound.play("musicBg");
+		music = this.sound.add("musicBg");
+		wave = this.sound.add("wave");
+		wave.play({volume: 0,loop: false});
+		music.play({volume: 1,loop: true});
         this.add.image(750, 450, 'escenario2').setScale(1.5).setDepth(0.5);
-        //Sombras
-        this.add.image(1050, 630, 'shadow');
-        this.add.image(740, 490, 'shadow');
-        this.add.image(860, 770, 'shadow');
-        this.add.image(550, 590, 'shadow');
+		//Sombras
+		this.add.image(1050, 630, 'shadow');
+		this.add.image(740, 490, 'shadow');
+		this.add.image(860, 770, 'shadow');
+		this.add.image(550, 590, 'shadow');
         //  The platforms group contains the ground and the 2 ledges we can jump on
         colliders = this.physics.add.staticGroup();
 
@@ -65,125 +74,280 @@ class EscenaJuego extends Phaser.Scene {
         //  Input Events
         cursors = this.input.keyboard.createCursorKeys();
 
+        //  Some stars to collect, 12 in total, evenly spaced 70 pixels apart along the x axis
+        /*stars = this.physics.add.group({
+            key: 'star',
+            repeat: 11,
+            setXY: {x: 12, y: 0, stepX: 70}
+        });
+
+        stars.children.iterate(function (child) {
+
+            //  Give each star a slightly different bounce
+            child.setBounceY(Phaser.Math.FloatBetween(0.4, 0.8));
+
+        });
+
+        bombs = this.physics.add.group();
+		*/
         //  The score
-        scoreText3 = this.add.text(16, 16, 'Score: ' + victoria3, {fontSize: '40px', fill: '#ffff00', stroke: '#00000f', strokeThickness: 2});
-        scoreText1 = this.add.text(1300, 16, 'Score: ' + victoria1, {fontSize: '40px', fill: '#0000ff', stroke: '#00000f', strokeThickness: 2});
-        scoreText = this.add.text(16, 800, 'Score: ' + victoria, {fontSize: '40px', fill: '#ff0000', stroke: '#00000f', strokeThickness: 2});
-        scoreText2 = this.add.text(1300, 800, 'Score: ' + victoria2, {fontSize: '40px', fill: '#00ff00', stroke: '#00000f', strokeThickness: 2});
+        scoreText3 = this.add.text(16, 16, 'Score: '+victoria3, {fontSize: '40px', fill: '#ffff00',stroke :  '#00000f' , strokeThickness :  2 });
+        scoreText1 = this.add.text(1300, 16, 'Score: '+victoria1, {fontSize: '40px', fill: '#0000ff',stroke :  '#00000f' , strokeThickness :  2});
+        scoreText = this.add.text(16, 800, 'Score: '+victoria, {fontSize: '40px', fill: '#ff0000',stroke :  '#00000f' , strokeThickness :  2});
+        scoreText2 = this.add.text(1300, 800, 'Score: '+victoria2, {fontSize: '40px', fill: '#00ff00',stroke :  '#00000f' , strokeThickness :  2});
     }
 
     update()
     {
-        /*
-         if (gameOver)
-         {
-         //volver al menu principal
-         this.scene.start("MainMenu");
-         }//*/
-        if (jugadoresMuertos >= 3) {
-            ondasArray = [];
-            gameOver = true;
-        }
+		
+        /*if (gameOver)
+        {
+            //volver al menu principal
+            this.scene.start("MainMenu");
+        }*/
+		if(jugadoresMuertos>=3 && !gameOver){
+				var win="Nobody";
+				var strikeWin='#ff0000';
+				if(!player.muerto){
+					win="RED";
+					strikeWin='#ff0000';
+				}
+				if(!player1.muerto){
+					win="BLUE";
+					strikeWin='#0000ff';
+				}
+				if(!player2.muerto){
+					win="GREEN";
+					strikeWin='#00ff00';
+				}
+				if(!player3.muerto){
+					win="YELLOW";
+					strikeWin='#ffff00';
+				}
+			
+			var texto = this.add.text(game.config.width / 2, game.config.height / 3, win, {
+                        fontSize: '100px',
+                        fill: strikeWin,
+						stroke :  '#00000' , 
+						strokeThickness :  3 ,
+						fontFamily: 'Amatica SC'
+                    }).setOrigin(0.5).setDepth(1);
+					
+			var texto = this.add.text(game.config.width / 2, game.config.height / 2, 'Press Enter to restart', {
+                        fontSize: '100px',
+                        fill: '#ffffff',
+						stroke :  '#00000' , 
+						strokeThickness :  3 ,
+						fontFamily: 'Amatica SC'
+                    }).setOrigin(0.5).setDepth(1);
+			ondasArray=[];
+			gameOver=true;
+		}
 
 //PLAYER, LEFT
-        if (!player.muerto) {
-            if (cursors.left.isDown) player.saltar();
-            else if (player.jumptimer != 0) {
-                //reset jumptimer al dejar de pulsar la tecla
-                player.jumptimer = 0;
-                player.haSaltado = true;
-            }
-            if (player.haSaltado && player.body.touching.down) {
-                player.haSaltado = false;
-                ondasArray.push(new Onda(player.object.x, player.body.bottom, this.add.graphics({lineStyle: {width: 2, color: 0xff0000}}), "player"));
-            }
-        }
-//PLAYER1, RIGHT	
-        if (!player1.muerto) {
-            if (cursors.right.isDown) player1.saltar();
-            else if (player1.jumptimer != 0) {
-                player1.jumptimer = 0;
-                player1.haSaltado = true;
-            }
-            if (player1.haSaltado && player1.body.touching.down) {
-                player1.haSaltado = false;
-                ondasArray.push(new Onda(player1.object.x, player1.body.bottom, this.add.graphics({lineStyle: {width: 2, color: 0x0000ff}}), "player1"));
-            }
-        }
-//PLAYER2, DOWN
-        if (!player2.muerto) {
-            if (cursors.down.isDown) player2.saltar();
-            else if (player2.jumptimer != 0) {
-                player2.jumptimer = 0;
-                player2.haSaltado = true;
-            }
-            if (player2.haSaltado && player2.body.touching.down) {
-                player2.haSaltado = false;
-                ondasArray.push(new Onda(player2.object.x, player2.body.bottom, this.add.graphics({lineStyle: {width: 2, color: 0x00ff00}}), "player2"));
-            }
-        }
-//PLAYER3, UP	
-        if (!player3.muerto) {
-            if (cursors.up.isDown) player3.saltar();
-            else if (player3.jumptimer != 0) {
-                player3.jumptimer = 0;
-                player3.haSaltado = true;
-            }
-            if (player3.haSaltado && player3.body.touching.down) {
-                player3.haSaltado = false;
-                ondasArray.push(new Onda(player3.object.x, player3.body.bottom, this.add.graphics({lineStyle: {width: 2, color: 0xffff00}}), "player3"));
-            }
-        }
+		if(!player.muerto){
+			if (cursors.left.isDown && player.body.touching.down)
+			{   //player en el suelo y puede saltar
+				
+				jumptimer = 1;
+				player.velocity.y = -150;
+			} else if (cursors.left.isDown && (jumptimer != 0)) {
+				//player esta en el aire pulsando la tecla de saltar todavia
+				if (jumptimer > 25) {
+					// // player lleva 30 frames en el aire
+					jumptimer = 0;
+					haSaltado=true;
+				} else {
+					// player puede seguir saltando, no ha alcanzado los 30 frames
+					jumptimer++;
+					player.velocity.y = -150;
+				}
+			} else if (jumptimer != 0) {
+				//reset jumptimer al dejar de pulsar la tecla
+				jumptimer = 0;
+				haSaltado=true;
+			}
+			if(haSaltado && player.body.touching.down){
+				haSaltado=false;
+				wave.play({volume: 1,loop: false});
+				ondasArray.push(new Onda(player.object.x, player.body.bottom, this.add.graphics({lineStyle: {width: 2, color: 0xff0000}}),"player"));
+			}
+		}
+        //PLAYER1, RIGHT	
+		if(!player1.muerto){		
+			if (cursors.right.isDown && player1.body.touching.down)
+			{
+				jumptimer1 = 1;
+				player1.body.velocity.y = -150;
+			} else if (cursors.right.isDown && (jumptimer1 != 0))
+			{
+				if (jumptimer1 > 25) {
+					jumptimer1 = 0;
+					haSaltado1=true;
+				} else {
+					jumptimer1++;
+					player1.body.velocity.y = -150;
+				}
+			} else if (jumptimer1 != 0) {
+				jumptimer1 = 0;
+				haSaltado1=true;
+			}
+			
+			if(haSaltado1 && player1.body.touching.down){
+				haSaltado1=false;
+				wave.play({volume: 1,loop: false});
+				ondasArray.push(new Onda(player1.object.x, player1.body.bottom, this.add.graphics({lineStyle: {width: 2, color: 0x0000ff}}),"player1"));
+			}
+		}
+        //PLAYER2, DOWN
+		if(!player2.muerto){			
+			if (cursors.down.isDown && player2.body.touching.down)
+			{
+				jumptimer2 = 1;
+				player2.body.velocity.y = -150;
+			} else if (cursors.down.isDown && (jumptimer2 != 0))
+			{
+				if (jumptimer2 > 25) {
+					jumptimer2 = 0;
+					haSaltado2=true;
+				} else {
+					jumptimer2++;
+					player2.body.velocity.y = -150;
+				}
+			} else if (jumptimer2 != 0) {
+				jumptimer2 = 0;
+				haSaltado2=true;
+			}
+			if(haSaltado2 && player2.body.touching.down){
+				haSaltado2=false;
+				wave.play({volume: 1,loop: false});
+				ondasArray.push(new Onda(player2.object.x, player2.body.bottom, this.add.graphics({lineStyle: {width: 2, color: 0x00ff00}}),"player2"));
+			}
+		}
+        //PLAYER3, UP	
+		if(!player3.muerto){		
+			if (cursors.up.isDown && player3.body.touching.down)
+			{
+				jumptimer3 = 1;
+				player3.body.velocity.y = -150;
+			} else if (cursors.up.isDown && (jumptimer3 != 0))
+			{
+				if (jumptimer3 > 25) {
+					jumptimer3 = 0;
+					haSaltado3=true;
+				} else {
+					jumptimer3++;
+					player3.body.velocity.y = -150;
+				}
+			} else if (jumptimer3 != 0) {
+				jumptimer3 = 0;
+				haSaltado3=true;
+			}
+			if(haSaltado3 && player3.body.touching.down){
+				haSaltado3=false;
+				wave.play({volume: 1,loop: false});
+				ondasArray.push(new Onda(player3.object.x, player3.body.bottom, this.add.graphics({lineStyle: {width: 2, color: 0xffff00}}),"player3"));
+			}
+		}
         //Update ELLIPSES
         for (var i = 0; i < ondasArray.length; i++) {
             ondasArray[i].expandir();
             ondasArray[i].render();
-            //Colisiones:
-            if (!player.muerto) {
-                if (ondasArray[i].checkCollision(player.object.x, player.body.bottom) && player.body.touching.down && ondasArray[i].creator != "player") {
-                    player.matar();
-                    jugadoresMuertos++;
-                }
-            }
-            if (!player1.muerto) {
-                if (ondasArray[i].checkCollision(player1.object.x, player1.body.bottom) && player1.body.touching.down && ondasArray[i].creator != "player1") {
-                    player1.matar();
-                    jugadoresMuertos++;
-                }
-            }
-            if (!player2.muerto) {
-                if (ondasArray[i].checkCollision(player2.object.x, player2.body.bottom) && player2.body.touching.down && ondasArray[i].creator != "player2") {
-                    player2.matar();
-                    jugadoresMuertos++;
-                }
-            }
-            if (!player3.muerto) {
-                if (ondasArray[i].checkCollision(player3.body.x, player3.body.bottom) && player3.body.touching.down && ondasArray[i].creator != "player3") {
-                    player3.matar();
-                    jugadoresMuertos++;
-                }
-            }
+			//ondasArray[i]checkCollision(player3.x, player3.y);
+			if(!player.muerto){
+				if(ondasArray[i].checkCollision(player.object.x, player.body.bottom) && player.body.touching.down && ondasArray[i].creator!="player"){
+					player.matar();
+					jugadoresMuertos++;
+				}
+			}
+			
+			if(!player1.muerto){
+				if(ondasArray[i].checkCollision(player1.object.x, player1.body.bottom) && player1.body.touching.down && ondasArray[i].creator!="player1"){
+					player1.matar();
+					jugadoresMuertos++;
+				}
+			}
+			if(!player2.muerto){
+				if(ondasArray[i].checkCollision(player2.object.x, player2.body.bottom) && player2.body.touching.down && ondasArray[i].creator!="player2"){
+					player2.matar();
+					jugadoresMuertos++;
+				}
+			}
+			if(!player3.muerto){
+				if(ondasArray[i].checkCollision(player3.body.x, player3.body.bottom) && player3.body.touching.down && ondasArray[i].creator!="player3"){
+					player3.matar();
+					jugadoresMuertos++;
+				}
+			}
         }
 
-        if (this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER).isDown && gameOver) {
+		
+		//scoreText.addColor(ssss);scoreText
+		
+		
 
-            if (!player.muerto) {
-                victoria++;
-            }
-            if (!player1.muerto) {
-                victoria1++;
-            }
-            if (!player2.muerto) {
-                victoria2++;
-            }
-            if (!player3.muerto) {
-                victoria3++;
-            }
-            ondasArray = [];
-            gameOver = false;
-            jugadoresMuertos = 0;
-            this.scene.start("EscenaJuego");
+		 if (this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER).isDown && gameOver) {
+
+				if(!player.muerto){
+					victoria++;
+				}
+				if(!player1.muerto){
+					victoria1++;
+				}
+				if(!player2.muerto){
+					victoria2++;
+				}
+				if(!player3.muerto){
+					victoria3++;
+				}
+				ondasArray=[];
+				haSaltado=false;
+				haSaltado1=false;
+				haSaltado2=false;
+				haSaltado3=false;
+				gameOver=false;
+				jugadoresMuertos = 0;
+                this.scene.start("EscenaJuego");
         }
+    }
+
+    collectStar(player, star)
+    {
+        star.disableBody(true, true);
+
+        //  Add and update the score
+        score += 10;
+        scoreText.setText('Score: ' + score);
+
+        if (stars.countActive(true) === 0)
+        {
+            //  A new batch of stars to collect
+            stars.children.iterate(function (child) {
+
+                child.enableBody(true, child.x, 0, true, true);
+
+            });
+
+            var x = (player.x < 400) ? Phaser.Math.Between(400, 800) : Phaser.Math.Between(0, 400);
+
+            var bomb = bombs.create(x, 16, 'bomb');
+            bomb.setBounce(1);
+            bomb.setCollideWorldBounds(true);
+            bomb.setVelocity(Phaser.Math.Between(-200, 200), 20);
+            bomb.allowGravity = false;
+
+        }
+    }
+
+    hitBomb(player, bomb)
+    {
+        this.physics.pause();
+
+        player.setTint(0xff0000);
+
+        player.anims.play('turn');
+
+        gameOver = true;
     }
 }
 ;
