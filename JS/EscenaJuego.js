@@ -105,10 +105,6 @@ class EscenaJuego extends Phaser.Scene {
             //volver al menu principal
             this.scene.start("MainMenu");
         }*/
-		if(this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A).isDown)
-		{
-			game.paused = true;
-		}
 		
 		if(jugadoresMuertos>=3 && !gameOver){
 				var win="Nobody";
