@@ -105,6 +105,7 @@ class EscenaJuego extends Phaser.Scene {
             //volver al menu principal
             this.scene.start("MainMenu");
         }*/
+		
 		if(jugadoresMuertos>=3 && !gameOver){
 				var win="Nobody";
 				var strikeWin='#ff0000';
