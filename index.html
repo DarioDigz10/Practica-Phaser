@@ -8,7 +8,8 @@
         <script src="JS/EscenaJuego.js" type="text/javascript"></script>
         <script src="JS/Onda.js" type="text/javascript"></script>
         <script src="JS/Player.js" type="text/javascript"></script>
-
+        <script src="JS/MenuControles.js" type="text/javascript"></script>
+        
         <style type="text/css">
             body {
                 margin: 0;
@@ -16,7 +17,7 @@
         </style>
     </head>
     <body>
-
+    
         <script type="text/javascript">
 
             var config =
@@ -31,11 +32,11 @@
                         physics: {
                             default: 'arcade',
                             arcade: {
-                                gravity: {y: 400},
+                                gravity: {y: 480},
                                 debug: false
                             }
                         },
-                        scene: [MainMenu, EscenaJuego]
+                        scene: [MainMenu,MenuControles, EscenaJuego]
 
                     };
 
@@ -82,6 +83,6 @@
             var music;
             var wave;
         </script>
-
+    
     </body>
 </html>

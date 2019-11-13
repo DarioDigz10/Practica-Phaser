@@ -17,15 +17,23 @@ class MainMenu extends Phaser.Scene {
 
 
 
-        var texto = this.add.text(game.config.width / 2, (game.config.height / 2) + 200, 'Press Enter to start.', {
+        var texto = this.add.text(game.config.width / 2, (game.config.height / 2) + 300, 'Press Enter to start.', {
             fontSize: '40px',
             fill: '#ffffff',
             stroke: '#00000',
             strokeThickness: 3,
             fontFamily: 'Amatica SC'
-        }).setOrigin(0.5)
+        }).setOrigin(0.5);
 
-        this.logoMovil = this.add.image(game.config.width / 2, (game.config.height / 2) - 30, 'logoJuego').setScale(0.2);
+        var texto = this.add.text(game.config.width / 2, (game.config.height / 2) + 350, 'Press C to show Controls.', {
+            fontSize: '25px',
+            fill: '#ffffff',
+            stroke: '#00000',
+            strokeThickness: 3,
+            fontFamily: 'Amatica SC'
+        }).setOrigin(0.5);
+
+        this.logoMovil = this.add.image(game.config.width / 2, (game.config.height / 2) - 30, 'logoJuego').setScale(0.3);
         this.speed = 0.3;
 
     }
@@ -34,6 +42,10 @@ class MainMenu extends Phaser.Scene {
     {
         if (this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER).isDown) {
             this.scene.start("EscenaJuego");
+        }
+
+        if (this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.C).isDown) {
+            this.scene.start("MenuControles");
         }
 
         this.logoMovil.y += this.speed;

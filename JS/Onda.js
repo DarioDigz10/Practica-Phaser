@@ -9,6 +9,8 @@ class Onda {
         this.radioX_inner = this.radioX - 10;
         this.radioY_inner = this.radioX - 10;
         this.ellipse_inner = new Phaser.Geom.Ellipse(centerX, centerY, this.radioX_inner, this.radioY_inner);
+        //Relleno
+        this.ellipse_relleno = new Phaser.Geom.Ellipse(centerX, centerY, this.radioX - 5, this.radioY - 5);
         this.graphics = graphics;
     }
 
@@ -25,12 +27,13 @@ class Onda {
         this.radioX_inner = this.radioX - 10;
         this.radioY_inner = this.radioY - 10;
         this.ellipse_inner.setSize(this.radioX_inner, this.radioY_inner);
+        this.ellipse_relleno.setSize(this.radioX - 5, this.radioY - 5);
     }
 
     render() {
         this.graphics.clear();
-        this.graphics.strokeEllipseShape(this.ellipse, 64);
-        this.graphics.strokeEllipseShape(this.ellipse_inner, 64);
-
+        //this.graphics.strokeEllipseShape(this.ellipse, 64);
+        //this.graphics.strokeEllipseShape(this.ellipse_inner, 64);
+        this.graphics.strokeEllipseShape(this.ellipse_relleno, 64);
     }
 }

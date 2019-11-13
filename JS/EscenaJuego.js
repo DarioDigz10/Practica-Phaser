@@ -33,19 +33,19 @@ class EscenaJuego extends Phaser.Scene {
         music.play({volume: 1, loop: true});
         this.add.image(750, 450, 'escenario2').setScale(1.5).setDepth(0.5);
         //Sombras
-        this.add.image(1050, 630, 'shadow');
-        this.add.image(740, 490, 'shadow');
-        this.add.image(860, 770, 'shadow');
-        this.add.image(550, 590, 'shadow');
+        this.add.image(1050, 630, 'shadow').setAlpha(0.6);
+        this.add.image(740, 490, 'shadow').setAlpha(0.6);
+        this.add.image(860, 770, 'shadow').setAlpha(0.6);
+        this.add.image(550, 590, 'shadow').setAlpha(0.6);
         //  The platforms group contains the ground and the 2 ledges we can jump on
         colliders = this.physics.add.staticGroup();
 
         //  Here we create the Ground COLLIDERS.
         //colliders.create(100, 400, 'collider').setScale(0.2).refreshBody();
-        colliders.create(1050, 640, 'collider').setScale(0.2).refreshBody();
-        colliders.create(740, 500, 'collider').setScale(0.2).refreshBody();
-        colliders.create(860, 780, 'collider').setScale(0.2).refreshBody();
-        colliders.create(550, 600, 'collider').setScale(0.2).refreshBody();
+        colliders.create(1050, 660, 'collider').setScale(0.2).refreshBody();
+        colliders.create(740, 520, 'collider').setScale(0.2).refreshBody();
+        colliders.create(860, 800, 'collider').setScale(0.2).refreshBody();
+        colliders.create(550, 620, 'collider').setScale(0.2).refreshBody();
 
         // The PLAYERS and its settings
         player = new Player(1050, 440, 'Red', this);
@@ -154,7 +154,7 @@ class EscenaJuego extends Phaser.Scene {
             if (haSaltado && player.body.touching.down) {
                 haSaltado = false;
                 wave.play({volume: 1, loop: false});
-                ondasArray.push(new Onda(player.object.x, player.body.bottom, this.add.graphics({lineStyle: {width: 2, color: 0xff0000}}), "player"));
+                ondasArray.push(new Onda(player.object.x, player.body.bottom, this.add.graphics({lineStyle: {width: 8, color: 0xff0000,alpha:0.5}}), "player"));
             }
         }
 //PLAYER1, RIGHT	
@@ -180,7 +180,7 @@ class EscenaJuego extends Phaser.Scene {
             if (haSaltado1 && player1.body.touching.down) {
                 haSaltado1 = false;
                 wave.play({volume: 1, loop: false});
-                ondasArray.push(new Onda(player1.object.x, player1.body.bottom, this.add.graphics({lineStyle: {width: 2, color: 0x0000ff}}), "player1"));
+                ondasArray.push(new Onda(player1.object.x, player1.body.bottom, this.add.graphics({lineStyle: {width: 8, color: 0x0000ff,alpha:0.5}}), "player1"));
             }
         }
 //PLAYER2, DOWN
@@ -205,7 +205,7 @@ class EscenaJuego extends Phaser.Scene {
             if (haSaltado2 && player2.body.touching.down) {
                 haSaltado2 = false;
                 wave.play({volume: 1, loop: false});
-                ondasArray.push(new Onda(player2.object.x, player2.body.bottom, this.add.graphics({lineStyle: {width: 2, color: 0x00ff00}}), "player2"));
+                ondasArray.push(new Onda(player2.object.x, player2.body.bottom, this.add.graphics({lineStyle: {width: 8, color: 0x00ff00,alpha:0.5}}), "player2"));
             }
         }
 //PLAYER3, UP	
@@ -230,7 +230,7 @@ class EscenaJuego extends Phaser.Scene {
             if (haSaltado3 && player3.body.touching.down) {
                 haSaltado3 = false;
                 wave.play({volume: 1, loop: false});
-                ondasArray.push(new Onda(player3.object.x, player3.body.bottom, this.add.graphics({lineStyle: {width: 2, color: 0xffff00}}), "player3"));
+                ondasArray.push(new Onda(player3.object.x, player3.body.bottom, this.add.graphics({lineStyle: {width: 8, color: 0xffff00,alpha:0.5}}), "player3"));
             }
         }
 
