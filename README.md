@@ -18,16 +18,18 @@ Público general: cualquier tipo de jugador, ya sea experimentado o no. Esto lo 
 Jugabilidad:
 El juego en muy simple, el único control es saltar, que genera una onda que puede matar a los otros jugadores. Estos, para esquivar dichas ondas deben saltarlas, generando otra onda.
 Estilo visual:
-Mantiene la simplicidad, los jugadores son cubos y la arena consta de una plataforma para cada jugador.
+Mantiene la simplicidad, los jugadores son barriles y la arena consta de una plataforma para cada jugador.
 Alcance:
 El objetivo es desarrollar un juego sencillo, tanto técnica como jugablemente, en un entorno multijugador.
 Interfaz:
-Menú: cuenta con dos opciones: 
-Seleccionar el número de jugadores (tras hacerlo empieza la partida)
-Salir.
-Dentro del juego: no habrá ningún tipo de elemento.
-Pantalla final: muestra el ganador de la partida y te permite repetir la partida o 
-volver al menú.
+Menú: cuenta con dos opciones: poner el nombre y empezar la partida o ir a la pantalla de controles
+Dentro del juego:se muestra la puntuación de cada jugador
+Pantalla final: muestra el ganador de la partida y te permite repetir la partida 
 
 Arte:
 Simple, los personajes son cubos de diferentes colores. Las ondas que genera cada jugador son circunferencias de un color para todos los jugadores.
+
+
+Aspectos añadidos para la FASE 3:
+  Chat en el que aparece la conexión o desconexión de los usuarios
+  Posibilidad de escribir mensajes en el chat que el resto de usuarios puede ver
