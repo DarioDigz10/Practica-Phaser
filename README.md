@@ -8,8 +8,8 @@ Grupo F:
 - Alejandro García Rodríguez de Lizana
 - Tomás Manzano Sobrido
 ____________________________________________________________________
-Enlace al repositorio de Github: https://github.com/Tomi15/WaveJump
-Enlace a trello para gestión del proyecto:https://trello.com/b/RI4Qv8Zb/juegos-en-red
+- *Enlace al repositorio de Github: https://github.com/DarioDigz10/Practica-Phaser
+- *Enlace a trello para gestión del proyecto:https://trello.com/b/RI4Qv8Zb/juegos-en-red
 ____________________________________________________________________
 1. Introducción:
 - Concepto del juego
