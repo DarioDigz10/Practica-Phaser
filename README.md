@@ -29,7 +29,7 @@ ____________________________________________________________________
   f. Estilo visual:
     i. Se trata de un estilo visual estilizado (como si estuviera pintado con acuarelas) con una ambientación medieval acorde con la historia. Es importante mantener la                simplicidad, sobre todo en los jugadores ya que la visibilidad de estos y de las ondas es lo más importante.
   g. Alcance:
-    i. El objetivo es desarrollar un juego sencillo, tanto técnica como jugablemente, en un entorno multijugador.
+  	i. El objetivo es desarrollar un juego sencillo, tanto técnica como jugablemente, en un entorno multijugador.
     ____________________________________________________________________
 2. Interfaz:
   a. Menú: cuenta con dos opciones:
