@@ -11,9 +11,8 @@ class Player {
         this.velocity = this.body.velocity;
         this.muerto = false;
     }
+    
     matar() {
-
-        //this.object.disableBody(true, true);
         this.muerto = true;
         this.object.destroy();
     }

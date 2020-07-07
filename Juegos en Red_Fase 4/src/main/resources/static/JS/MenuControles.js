@@ -3,18 +3,15 @@ class MenuControles extends Phaser.Scene {
     constructor() {
         super("MenuControles");
     }
-    preload()
-    {
+    preload() {
         this.load.image('fondo', 'assets/fondoMenu.jpg');
         this.load.image('escenario', 'assets/escenario.jpg');
         this.load.image('logoJuego', 'assets/logoWaveJump.png');
         this.load.image('back', 'assets/back.png');
         this.load.image('negro', 'assets/fondo.jpg');
-
     }
 
-    create()
-    {
+    create() {
         this.add.image(750, 450, 'fondo').setScale(2.07);
         this.add.image(750, 450, 'negro').setScale(1).setAlpha(0.6);;
 
@@ -65,17 +62,7 @@ class MenuControles extends Phaser.Scene {
             strokeThickness: 3,
             fontFamily: 'Arial'
         }).setOrigin(0.5);
-/*
-        var texto5 = this.add.text(game.config.width / 2, (game.config.height / 2) + 350, 'Press C to go back to Menu.', {
-            fontSize: '35px',
-            fill: '#ffffff',
-            stroke: '#00000',
-            strokeThickness: 3,
-            fontFamily: 'Amatica SC'
-        }).setOrigin(0.5);*/
-        /*
-         this.logoMovil = this.add.image(game.config.width / 2, (game.config.height / 2) - 30, 'logoJuego').setScale(0.3);
-         this.speed = 0.3;*/
+
         this.botonjoin = this.add.image(game.config.width / 2, (game.config.height / 1.212) - 30, 'back').setScale(0.3);
         this.botonjoin.setInteractive();
         this.botonjoin.on('pointerover', function (event) {
@@ -89,34 +76,17 @@ class MenuControles extends Phaser.Scene {
             this.clearTint();
 
         });
-        this.botonjoin.on('pointerdown',function (event) {
-            botonjoin=true;
+        this.botonjoin.on('pointerdown', function (event) {
+            botonjoin = true;
 
         });
     }
 
-    update()
-    {
-
-
-        if(botonjoin){
-        	botonjoin=false;
-        	var elem = document.getElementById("myText").style.display = 'block';
-        	this.scene.start("MainMenu");
-        }
-/*
-        if (this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC).isDown) {
+    update() {
+        if (botonjoin) {
+            botonjoin = false;
+            var elem = document.getElementById("myText").style.display = 'block';
             this.scene.start("MainMenu");
-        }*/
-        /*
-         this.logoMovil.y += this.speed;
-         //console.log(this.logoMovil.y);
-         if (this.logoMovil.y >= ((game.config.height / 2)) || this.logoMovil.y <= ((game.config.height / 2) - 30))
-         {
-         this.speed *= -1;
-         //console.log(this.speed);
-         }*/
-
+        }
     }
-
 }

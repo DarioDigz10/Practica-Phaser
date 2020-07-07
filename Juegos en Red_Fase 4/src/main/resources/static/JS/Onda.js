@@ -33,8 +33,6 @@ class Onda {
 
     render() {
         this.graphics.clear();
-        //this.graphics.strokeEllipseShape(this.ellipse, 64);
-        //this.graphics.strokeEllipseShape(this.ellipse_inner, 64);
         this.graphics.strokeEllipseShape(this.ellipse_relleno, 64);
     }
 }

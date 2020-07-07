@@ -6,8 +6,7 @@ public class Item {
 	private String description;
 	private boolean checked;
 
-	public Item() {
-	}
+	public Item() {}
 
 	public long getId() {
 		return id;
@@ -37,5 +36,4 @@ public class Item {
 	public String toString() {
 		return " {id:" + id + ", description:" + description + ", checked:" + checked + "}";
 	}
-
 }

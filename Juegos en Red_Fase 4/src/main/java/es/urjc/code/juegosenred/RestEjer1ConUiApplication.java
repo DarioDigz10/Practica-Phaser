@@ -1,5 +1,4 @@
 package es.urjc.code.juegosenred;
-
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -23,7 +22,6 @@ public class RestEjer1ConUiApplication implements WebSocketConfigurer {
 	}
 	
 	public static void main(String[] args) {
-		
 		SpringApplication.run(RestEjer1ConUiApplication.class, args);
 	}
 }

@@ -1,372 +1,273 @@
-<!doctype html> 
-<html lang="en"> 
-    <head> 
-        <meta charset="UTF-8" />
-        <title>Wave Jump</title>
-        <script src="//cdn.jsdelivr.net/npm/phaser@3.11.0/dist/phaser.js"></script>
-        <script src="JS/MainMenu.js" type="text/javascript"></script>
-        <script src="JS/EscenaJuego.js" type="text/javascript"></script>
-        <script src="JS/Onda.js" type="text/javascript"></script>
-        <script src="JS/Player.js" type="text/javascript"></script>
-        <script src="JS/MenuControles.js" type="text/javascript"></script>
-        <script src="JS/WaitScene.js" type="text/javascript"></script>
-        <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
-        
-        <script>
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Wave Jump</title>
+    <script src="//cdn.jsdelivr.net/npm/phaser@3.11.0/dist/phaser.js"></script>
+    <script src="JS/MainMenu.js" type="text/javascript"></script>
+    <script src="JS/EscenaJuego.js" type="text/javascript"></script>
+    <script src="JS/Onda.js" type="text/javascript"></script>
+    <script src="JS/Player.js" type="text/javascript"></script>
+    <script src="JS/MenuControles.js" type="text/javascript"></script>
+    <script src="JS/WaitScene.js" type="text/javascript"></script>
+    <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+
+    <script>
         var connection = new WebSocket('ws://192.168.1.143:8080/echo');
-        //var connection = new WebSocket('ws://81.0.39.247:8080/echo');
 
-        		/*connection.onopen = function () {
-        			connection.send('Hi');
-        		}
-        		connection.onerror = function(e) {
-        			console.log("WS error: " + e);
-        		}
-        		connection.onmessage = function(msg) {
-        			console.log("WS message: " + msg.data);
-        			//EscenaJuego.prueba();
-        		}
-        		$(document).ready(function() {
-        			$('#send-btn').click(function() {
-        		var message = $('#message').val();
-        			connection.send(message);
-        			});
-        		});
-        		
-                function salta(){
-                	console.log("Me cago en mi mierda");
-                    var connection = new WebSocket('ws://192.168.1.141:8080/echo');
-                    
-            		connection.onopen = function () {
-            			connection.send('Salto');
-            		}
-            		connection.onerror = function(e) {
-            			console.log("WS error: " + e);
-            		}
-            		connection.onmessage = function(msg) {
-            			console.log("WS message: " + msg.data);
-            		}
-            		$(document).ready(function() {
-            			$('#send-btn').click(function() {
-            		var message = $('#message').val();
-            			connection.send(message);
-            			});
-            		});
-                } 
-                
-                function dejoSalta(){
-                	console.log("mierda");
-                    var connection = new WebSocket('ws://192.168.1.141:8080/echo');
-            		connection.onopen = function () {
-            			connection.send('Dejo Salto');
-            		}
-            		connection.onerror = function(e) {
-            			console.log("WS error: " + e);
-            		}
-            		connection.onmessage = function(msg) {
-            			console.log("WS message: " + msg.data);
-            		}
-            		$(document).ready(function() {
-            			$('#send-btn').click(function() {
-            		var message = $('#message').val();
-            			connection.send(message);
-            			});
-            		});
-                } 
-                function creoOnda(){
-                	console.log("mierda");
-                    var connection = new WebSocket('ws://192.168.1.141:8080/echo');
-            		connection.onopen = function () {
-            			connection.send('creo Onda');
-            		}
-            		connection.onerror = function(e) {
-            			console.log("WS error: " + e);
-            		}
-            		connection.onmessage = function(msg) {
-            			console.log("WS message: " + msg.data);
-            		}
-            		$(document).ready(function() {
-            			$('#send-btn').click(function() {
-            		var message = $('#message').val();
-            			connection.send(message);
-            			});
-            		});
-                } 
-                
-                function muero(){
-                	console.log("muerte");
-                    var connection = new WebSocket('ws://192.168.1.141:8080/echo');
-            		connection.onopen = function () {
-            			connection.send('Muerte');
-            		}
-            		connection.onerror = function(e) {
-            			console.log("WS error: " + e);
-            		}
-            		connection.onmessage = function(msg) {
-            			console.log("WS message: " + msg.data);
-            		}
-            		$(document).ready(function() {
-            			$('#send-btn').click(function() {
-            		var message = $('#message').val();
-            			connection.send(message);
-            			});
-            		});
-                } */
-                function mensaje(){
-                	console.log("LLego mensaje");
-                } 
-        </script>
-  
+        function mensaje() {
+            console.log("Mensaje Recibido!");
+        } 
+    </script>
 
-        <style type="text/css">
-            body {
-                margin: 10;
-                background-color: #404040;
-            }
-            #myText {
-                display: block;
-                margin: 0;
-                position: absolute;
-                top: 87%;
-                left: 50%;
-                transform: translate(-95%, 0%);
-                height:30px;
-                width:20%;
-            }
-            canvas {
-                display: block;
-                margin: 0;
-                position: absolute;
-                top: 50%;
-                left: 50%;
-                transform: translate(-61%, -50%);
-                width:82%;
-            }
-            #chat {
-                display: block;
-                margin: 0;
-                position: absolute;
-                top: 0%;
-                right: 0%;
-                width:15%;
-                height:100%;
-                background-color: #202020;
-                padding:20px;
+    <style type="text/css">
+        body {
+            margin: 10;
+            background-color: #404040;
+        }
 
-            }   
-            #cajaMensaje {
-                display: block;
-                margin: 0;
-                position: relative;
-                bottom: 0%;
-                right: 0%;
-                width:100%;
+        #myText {
+            display: block;
+            margin: 0;
+            position: absolute;
+            top: 87%;
+            left: 50%;
+            transform: translate(-95%, 0%);
+            height: 30px;
+            width: 20%;
+        }
 
-                background-color: #202020;
+        canvas {
+            display: block;
+            margin: 0;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-61%, -50%);
+            width: 82%;
+        }
 
+        #chat {
+            display: block;
+            margin: 0;
+            position: absolute;
+            top: 0%;
+            right: 0%;
+            width: 15%;
+            height: 100%;
+            background-color: #202020;
+            padding: 20px;
+        }
 
-            }
-            #mensajes {
-                display: block;
-                margin: 0;
-                position: relative;
-                bottom: 0%;
-                right: 0%;
-                height:78%;
-				overflow-y: scroll;
-                
-				overflow:hidden;
+        #cajaMensaje {
+            display: block;
+            margin: 0;
+            position: relative;
+            bottom: 0%;
+            right: 0%;
+            width: 100%;
+            background-color: #202020;
+        }
 
-            }
+        #mensajes {
+            display: block;
+            margin: 0;
+            position: relative;
+            bottom: 0%;
+            right: 0%;
+            height: 78%;
+            overflow-y: scroll;
+            overflow: hidden;
+        }
 
+        p {
+            color: white;
+            font-size: 0.8em;
+            font-family: Arial;
+        }
 
+        h3 {
+            color: #609960;
+            font-family: Arial;
+            line-height: 0;
+            font-size: 1em;
+        }
 
-            p{color:white;font-size: 0.8em;font-family: Arial;}
-            h3{color:#609960; font-family: Arial; line-height: 0;font-size: 1em;}
-            h4{color:#606099;line-height: 1.5;font-family: Arial;font-size: 1em;}
+        h4 {
+            color: #606099;
+            line-height: 1.5;
+            font-family: Arial;
+            font-size: 1em;
+        }
+    </style>
+</head>
 
-        </style>
-    </head>
-    <body>
-        <div id="container"></div>
-        <input type="text" id="myText"/>
+<body>
+    <div id="container"></div>
+    <input type="text" id="myText" />
 
-        <div id="chat">
-            <div id="mensajes">
-
-
-            </div>
-            <div id="cajaMensaje">
-                <input type="submit" value="Submit" onclick="enviarMensaje()">
-
-                <input id="cuadroMensaje" style="width:100%;height:3em;" type="text" name="mensaje" placeholder="Send a message"><br>
-            </div>
-
+    <div id="chat">
+        <div id="mensajes">
         </div>
+        <div id="cajaMensaje">
+            <input type="submit" value="Submit" onclick="enviarMensaje()">
+            <input id="cuadroMensaje" style="width:100%;height:3em;" type="text" name="mensaje"
+                placeholder="Send a message"><br>
+        </div>
+    </div>
 
+    <script type="text/javascript">
+        var ip = '192.168.1.143';
 
+        var config =
+        {
+            type: Phaser.AUTO,
 
-        <script type="text/javascript">
-			
-        	var ip = '192.168.1.143';
-        	//var ip = '81.0.39.247';
-            var config =
-                    {
-                        type: Phaser.AUTO,
+            width: 1500,
+            height: 900,
 
-                        width: 1500,
-                        height: 900,
+            parent: 'container',
+            audio: {
+                disableWebAudio: true,
+                noAudio: false
+            },
+            physics: {
+                default: 'arcade',
+                arcade: {
+                    gravity: { y: 480 },
+                    debug: false
+                }
+            },
+            dom: {
+                createContainer: true
+            },
+            scene: [MainMenu, MenuControles, WaitScene, EscenaJuego]
 
-                        parent: 'container',
-                        audio: {
-                            disableWebAudio: true,
-                            noAudio: false
-                        },
-                        physics: {
-                            default: 'arcade',
-                            arcade: {
-                                gravity: {y: 480},
-                                debug: false
-                            }
-                        },
-                        dom: {
-                            createContainer: true
-                        },
-                        scene: [MainMenu, MenuControles, WaitScene, EscenaJuego]
+        };
 
-                    };
+        var game = new Phaser.Game(config);
+        setInterval('recibirChat()', 500);
 
-            var game = new Phaser.Game(config);
-            setInterval('recibirChat()', 500);
+        //variables globales:
 
-            //variables globales    
+        var usuario = 'Invitado';
 
-            var usuario = 'invitado';
+        var mensaje;
+        var miNumeroJugador;
+        var numeroJugadores = 0;
+        var player;
+        var player1;
+        var player2;
+        var player3;
 
-            var mensaje;
-			var miNumeroJugador;
-			var numeroJugadores=0;
-            var player;
-            var player1;
-            var player2;
-            var player3;
-            
-            var jumpKey;
-            var jumpKey0;
-            var jumpKey1;
-            var jumpKey2;
-            var jumpKey3;
-            
-            var saltandoOn=-1;
-            var saltandoOn1=-1;
-            var saltandoOn2=-1;
-            var saltandoOn3=-1;
-            var ondasArray = [];
+        var jumpKey;
+        var jumpKey0;
+        var jumpKey1;
+        var jumpKey2;
+        var jumpKey3;
 
-            var colliders;
-            var cursors;
-            var score = 0;
-            var jugadoresMuertos = 0;
-            var gameOver = false;
-            var scoreText;
-            var scoreText1;
-            var scoreText2
-                    ;
-            var scoreText3;
+        var saltandoOn = -1;
+        var saltandoOn1 = -1;
+        var saltandoOn2 = -1;
+        var saltandoOn3 = -1;
+        var ondasArray = [];
 
-            var jumptimer = 0;
-            var jumptimer1 = 0;
-            var jumptimer2 = 0;
-            var jumptimer3 = 0;
-            var haSaltado = false;
-            var haSaltado1 = false;
-            var haSaltado2 = false;
-            var haSaltado3 = false;
-            
-            var matado = false;
-            var matado1 = false;
-            var matado2 = false;
-            var matado3 = false;
-            
-            var reinicioJuego = false;
-            
-            var creaOnda = false;
-            var creaOnda1 = false;
-            var creaOnda2 = false;
-            var creaOnda3 = false;
-            
-            var botonjoin = false;
-            var botoncontrol = false;
-            var victoria = 0;
-            var victoria1 = 0;
-            var victoria2 = 0;
-            var victoria3 = 0;
+        var colliders;
+        var cursors;
+        var score = 0;
+        var jugadoresMuertos = 0;
+        var gameOver = false;
+        var scoreText;
+        var scoreText1;
+        var scoreText2
+            ;
+        var scoreText3;
 
-            var music;
-            var wave;
+        var jumptimer = 0;
+        var jumptimer1 = 0;
+        var jumptimer2 = 0;
+        var jumptimer3 = 0;
+        var haSaltado = false;
+        var haSaltado1 = false;
+        var haSaltado2 = false;
+        var haSaltado3 = false;
 
-            function enviarMensaje() {
-                mensaje = document.getElementById("cuadroMensaje").value;
-                console.log('{ "usuario":"' + usuario + '", "texto": "' + mensaje + '" }');
+        var matado = false;
+        var matado1 = false;
+        var matado2 = false;
+        var matado3 = false;
 
-                $.ajax({
-                    method: "POST",
-                    url: 'http://'+ip+':8080/items/chat',
-                    data: '{ "usuario":"' + usuario + '", "texto": "' + mensaje + '" }',
-                    processData: false,
-                    headers: {
-                        "Content-Type": "application/json"
-                    }
-                }).done(function (item) {
-                    console.log("Item created: " + JSON.stringify(item));
+        var reinicioJuego = false;
 
-                }).fail(function (item) {
-                    console.log("Failed:  " + item)
-                });
+        var creaOnda = false;
+        var creaOnda1 = false;
+        var creaOnda2 = false;
+        var creaOnda3 = false;
 
-                recibirChat();
-                document.getElementById("cuadroMensaje").value = "";
-            }
+        var botonjoin = false;
+        var botoncontrol = false;
+        var victoria = 0;
+        var victoria1 = 0;
+        var victoria2 = 0;
+        var victoria3 = 0;
 
-            function recibirChat() {
-                $.ajax({
-                    method: "POST",
-                    url: 'http://'+ip+':8080/items/verchat',
-                    data: '{"id": 0, "name": "' + usuario + '","contadorMensajes": 0}',
-                    processData: false,
-                    headers: {
-                        "Content-type": "application/json"
-                    }
-                }).done(function (data, textStatus, jqXHR) {
-                    //console.log(textStatus + " " + jqXHR.statusCode());
-                    separarDatos(data);
-                }).fail(function (data, textStatus, jqXHR) {
+        var music;
+        var wave;
 
-                });
-            }
+        function enviarMensaje() {
+            mensaje = document.getElementById("cuadroMensaje").value;
+            console.log('{ "usuario":"' + usuario + '", "texto": "' + mensaje + '" }');
 
-            function separarDatos(data) {
-                
-                var men = document.getElementById('mensajes');
-                men.scrollTop =999999999;
-                //console.log(" scrollTop "+men.scrollTop);
-                
-                //console.log(" scrollHeight "+men.scrollHeight);
-                //console.log(" clientHeight "+men.clientHeight);
-                
-                document.getElementById('mensajes').innerHTML = '';
-                for (var i = 0; i < data.length; i++) {
-                    if (data[i].usuario == 'Sistema') document.getElementById('mensajes').innerHTML += '<h4>' + data[i].texto + '</h4>';
-                    else {
-                        document.getElementById('mensajes').innerHTML += '<h3>' + data[i].usuario + '</h3>';
-                        document.getElementById('mensajes').innerHTML += '<p>' + data[i].texto + '</p>';
-                    }
+            $.ajax({
+                method: "POST",
+                url: 'http://' + ip + ':8080/items/chat',
+                data: '{ "usuario":"' + usuario + '", "texto": "' + mensaje + '" }',
+                processData: false,
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            }).done(function (item) {
+                console.log("Item created: " + JSON.stringify(item));
+
+            }).fail(function (item) {
+                console.log("Failed:  " + item)
+            });
+
+            recibirChat();
+            document.getElementById("cuadroMensaje").value = "";
+        }
+
+        function recibirChat() {
+            $.ajax({
+                method: "POST",
+                url: 'http://' + ip + ':8080/items/verchat',
+                data: '{"id": 0, "name": "' + usuario + '","contadorMensajes": 0}',
+                processData: false,
+                headers: {
+                    "Content-type": "application/json"
+                }
+            }).done(function (data, textStatus, jqXHR) {
+                //console.log(textStatus + " " + jqXHR.statusCode());
+                separarDatos(data);
+            }).fail(function (data, textStatus, jqXHR) {
+            });
+        }
+
+        function separarDatos(data) {
+            var men = document.getElementById('mensajes');
+            men.scrollTop = 999999999;
+
+            document.getElementById('mensajes').innerHTML = '';
+            for (var i = 0; i < data.length; i++) {
+                if (data[i].usuario == 'Sistema') document.getElementById('mensajes').innerHTML += '<h4>' + data[i].texto + '</h4>';
+                else {
+                    document.getElementById('mensajes').innerHTML += '<h3>' + data[i].usuario + '</h3>';
+                    document.getElementById('mensajes').innerHTML += '<p>' + data[i].texto + '</p>';
                 }
             }
+        }
 
-
-
-        </script>
-
-    </body>
+    </script>
+</body>
 </html>
