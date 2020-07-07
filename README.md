@@ -16,28 +16,28 @@ ____________________________________________________________________
     - El juego consiste en una competición entre 2,3 o 4 jugadores. Cada uno de ellos podrá únicamente saltar, lo que, al caer, genera una onda expansiva en forma de anillo con     la que puede acabar con los otros jugadores para esquivarla los demás jugadores deberán saltar generando al caer más ondas. El último jugador en pie gana la partida.
   b. Características principales:
     - Simplicidad: la existencia de un solo botón hace que cualquiera pueda aprender rápidamente.
-    ii. Competitividad: el juego incita a que los jugadores compitan entre ellos.
-    iii. Rapidez: el ritmo de las partidas, y entre diferentes partidas, es muy rápido. Lo que permite jugar un gran número de partidas en poco tiempo.
+    - Competitividad: el juego incita a que los jugadores compitan entre ellos.
+    - Rapidez: el ritmo de las partidas, y entre diferentes partidas, es muy rápido. Lo que permite jugar un gran número de partidas en poco tiempo.
   c. Género:
-    i. Casual
-    ii. Battle arena
+    - Casual
+    - Battle arena
   d. Propósito y público general:
-    i. Propósito: generar una competitividad entre los jugadores, que proporcione diversión en partidas muy rápidas.
-    ii. Público general: cualquier tipo de jugador, ya sea experimentado o no. Esto lo permite sus controles sencillos.
+    - Propósito: generar una competitividad entre los jugadores, que proporcione diversión en partidas muy rápidas.
+    - Público general: cualquier tipo de jugador, ya sea experimentado o no. Esto lo permite sus controles sencillos.
   e. Jugabilidad:
-    i. El juego en muy simple, el único control es saltar, que genera una onda que puede matar a los otros jugadores. Estos, para esquivar dichas ondas deben saltarlas,                generando otra onda. De este modo al esquivar una onda se generará otra onda que los otros jugadores deberán saltar, generando ellos una onda cada uno. Es un concepto            simple, pero hace que se generen muchas ondas que terminan siendo difíciles de esquivar.
+    - El juego en muy simple, el único control es saltar, que genera una onda que puede matar a los otros jugadores. Estos, para esquivar dichas ondas deben saltarlas,                generando otra onda. De este modo al esquivar una onda se generará otra onda que los otros jugadores deberán saltar, generando ellos una onda cada uno. Es un concepto            simple, pero hace que se generen muchas ondas que terminan siendo difíciles de esquivar.
   f. Estilo visual:
-    i. Se trata de un estilo visual estilizado (como si estuviera pintado con acuarelas) con una ambientación medieval acorde con la historia. Es importante mantener la                simplicidad, sobre todo en los jugadores ya que la visibilidad de estos y de las ondas es lo más importante.
+    - Se trata de un estilo visual estilizado (como si estuviera pintado con acuarelas) con una ambientación medieval acorde con la historia. Es importante mantener la                simplicidad, sobre todo en los jugadores ya que la visibilidad de estos y de las ondas es lo más importante.
   g. Alcance:
-  	i. El objetivo es desarrollar un juego sencillo, tanto técnica como jugablemente, en un entorno multijugador.
+    - El objetivo es desarrollar un juego sencillo, tanto técnica como jugablemente, en un entorno multijugador.
     ____________________________________________________________________
 2. Interfaz:
   a. Menú: cuenta con dos opciones:
-    i. Seleccionar el número de jugadores (tras hacerlo empieza lapartida)
-    ii. Salir.
+    - Seleccionar el número de jugadores (tras hacerlo empieza lapartida)
+    - Salir.
   b. Dentro del juego: cada jugador tendrá un marcador de su color con las partidas que han ganado.
   c. Pantalla final: muestra el ganador de la partida y te permite repetir la partida.
-  d. volver al menú.
+  d. Volver al menú.
   ____________________________________________________________________
 3. Arte:
   a. Simple, los personajes son barriles con marcas de diferentes colores. Las ondas que genera cada jugador son circunferencias de un color distinto para cada jugador para que      la visibilidad sea muy clara.
