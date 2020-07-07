@@ -13,9 +13,9 @@ Enlace a trello para gestión del proyecto:https://trello.com/b/RI4Qv8Zb/juegos-
 ____________________________________________________________________
 1. Introducción:
   a. Concepto del juego
-    i. El juego consiste en una competición entre 2,3 o 4 jugadores. Cada uno de ellos podrá únicamente saltar, lo que, al caer, genera una onda expansiva en forma de anillo con     la que puede acabar con los otros jugadores para esquivarla los demás jugadores deberán saltar generando al caer más ondas. El último jugador en pie gana la partida.
+    - El juego consiste en una competición entre 2,3 o 4 jugadores. Cada uno de ellos podrá únicamente saltar, lo que, al caer, genera una onda expansiva en forma de anillo con     la que puede acabar con los otros jugadores para esquivarla los demás jugadores deberán saltar generando al caer más ondas. El último jugador en pie gana la partida.
   b. Características principales:
-    i. Simplicidad: la existencia de un solo botón hace que cualquiera pueda aprender rápidamente.
+    - Simplicidad: la existencia de un solo botón hace que cualquiera pueda aprender rápidamente.
     ii. Competitividad: el juego incita a que los jugadores compitan entre ellos.
     iii. Rapidez: el ritmo de las partidas, y entre diferentes partidas, es muy rápido. Lo que permite jugar un gran número de partidas en poco tiempo.
   c. Género:
